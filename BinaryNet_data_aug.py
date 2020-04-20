@@ -44,10 +44,10 @@ sdl = SDL.SimpleDatasetLoader(preprocessors=[aap, iap])
 (data, labels) = sdl.load(imagePaths, verbose=500)
 data = data.astype('float') / 255.0
 
-(trainX, testX, trainY, testY) = train_test_split(data, labels, test_size=0.30, random_state=43)
+(trainX, validX, trainY, validY) = train_test_split(data, labels, test_size=0.30, random_state=43)
 
 trainY = LabelBinarizer().fit_transform(trainY)
-testY = LabelBinarizer().fit_transform(testY)
+validY = LabelBinarizer().fit_transform(validY)
 
 # construct the image generator for data augmentation 数据增强
 aug = ImageDataGenerator(rotation_range=30, width_shift_range=0.1,
@@ -77,7 +77,7 @@ cb_chcekpoint = TF_CB_chcekpoint.ModelCheckpointCallBack()
 cb_chcekpoint.set_checkpoint_path(config_path.get_checkpoint_path())
 
 H = model.fit(aug.flow(trainX, trainY, batch_size=32),
-              validation_data=(testX, testY), steps_per_epoch=len(trainX) // 32,
+              validation_data=(validX, validY), steps_per_epoch=len(trainX) // 32,
               epochs=epochs, verbose=1,
               callbacks=[cb_tensorboard.build_cb(), cb_chcekpoint.build_cb()])
 # 保存模型
@@ -85,8 +85,8 @@ model.save(filepath=config_path.get_model_save_path())
 
 # evaluate the network
 print("[INFO] evaluating network...")
-predictions = model.predict(testX, batch_size=32)
-print(classification_report(testY.argmax(axis=1),
+predictions = model.predict(validX, batch_size=32)
+print(classification_report(validY.argmax(axis=1),
                             predictions.argmax(axis=1), target_names=classNames))
 
 # 绘制结果
