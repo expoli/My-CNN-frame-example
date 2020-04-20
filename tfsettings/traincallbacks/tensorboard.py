@@ -1,9 +1,7 @@
 import tensorflow as tf
 
-from projectconfig import pathconfig
 
-
-class TensorboardCallBack:
+class TensorBoardCallBack:
     def __init__(self, histogram_freq=0,
                  batch_size=32,
                  write_graph=True,
@@ -14,7 +12,7 @@ class TensorboardCallBack:
                  embeddings_metadata=None,
                  embeddings_data=None,
                  update_freq='epoch'):
-        self.tensorboard_log_path = pathconfig.pathconfig().get_tensorblard_path()
+        self.tensorboard_log_path = ''
         self.histogram_freq = histogram_freq
         self.batch_size = batch_size
         self.write_graph = write_graph
@@ -25,6 +23,10 @@ class TensorboardCallBack:
         self.embeddings_metadata = embeddings_metadata
         self.embeddings_data = embeddings_data
         self.update_freq = update_freq
+
+    def set_log_path(self, log_path):
+        self.tensorboard_log_path = log_path
+        return self.tensorboard_log_path
 
     def build_cb(self):
         tonserboard_callback = tf.keras.callbacks.TensorBoard(log_dir=self.tensorboard_log_path,

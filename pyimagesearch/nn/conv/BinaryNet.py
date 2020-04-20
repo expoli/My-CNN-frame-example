@@ -32,9 +32,10 @@ class BinaryNet:
 
         return model
 
+
 if __name__ == '__main__':
     BinaryNet = BinaryNet
-    Model = BinaryNet.build(64,64,3)
+    Model = BinaryNet.build(64, 64, 3)
     Model.summary()
 
 """

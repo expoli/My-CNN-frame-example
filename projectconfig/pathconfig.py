@@ -1,16 +1,16 @@
 import os
 
 
-class pathconfig:
+class PathConfig:
+    # @staticmethod
     def __init__(self):
-        self.RESULT_ROOT_PATH = 'result2/results06/'
-        self.TRAINING_TIME = 'train'
-        self.MODEL_SAVE_PATH = 'models/'
-        self.TENSORBOARD_LOG_PATH = 'tensorboard_log/'
-        self.CHECKPOINT_PATH = 'checkpoint_path/'
-        self.CHECKPOINT_FORMAT = 'weights.{epoch:02d}-{val_loss:.2f}.hdf5'
+        self.RESULT_ROOT_PATH = ''
+        self.MODEL_SAVE_PATH = '/models/'
+        self.TENSORBOARD_LOG_PATH = '/tensorboard_log/'
+        self.CHECKPOINT_PATH = '/checkpoint_path/'
+        self.CHECKPOINT_FORMAT = '/weights.{epoch:02d}-{val_loss:.2f}.hdf5'
 
-    def get_tensorblard_path(self):
+    def get_tensorboard_path(self):
         path = self.RESULT_ROOT_PATH + self.TENSORBOARD_LOG_PATH
         check_dir(path)
         return path

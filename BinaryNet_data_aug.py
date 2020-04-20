@@ -66,18 +66,21 @@ model.compile(loss="sparse_categorical_crossentropy",
 print("[INFO] training network...")
 
 epochs = int(args['epochs'])
-config_path = pathconfig.pathconfig()
-config_path.set_root_path('results/results08/')
+config_path = pathconfig.PathConfig()
+config_path.set_root_path(new_root_path='results/')
 # 构建回调函数
-cb_tensorboard = TF_CB_tensorboard.TensorboardCallBack()
-cb_mdoel_saver = TF_CB_mdoel_saver.modelsaver()
+cb_tensorboard = TF_CB_tensorboard.TensorBoardCallBack()
+cb_tensorboard.set_log_path(config_path.get_tensorboard_path())
+cb_mdoel_saver = TF_CB_mdoel_saver.ModelSaver()
+cb_mdoel_saver.set_model_path(config_path.get_model_save_path())
 cb_chcekpoint = TF_CB_chcekpoint.ModelCheckpointCallBack()
+cb_chcekpoint.set_checkpoint_path(config_path.get_checkpoint_path())
 
 H = model.fit(aug.flow(trainX, trainY, batch_size=32),
               validation_data=(testX, testY), steps_per_epoch=len(trainX) // 32,
               epochs=epochs, verbose=1,
               callbacks=[cb_tensorboard.build_cb(), cb_chcekpoint.build_cb()])
-model.save(filepath=pathconfig.pathconfig().get_model_save_path())
+model.save(filepath=config_path.get_model_save_path())
 # evaluate the network
 print("[INFO] evaluating network...")
 predictions = model.predict(testX, batch_size=32)
