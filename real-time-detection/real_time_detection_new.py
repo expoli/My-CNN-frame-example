@@ -1,6 +1,7 @@
 import argparse
 
 from detection.FireDetection import FireDetectioner
+
 from tfsettings.gpu import InitGpu
 
 ap = argparse.ArgumentParser()
