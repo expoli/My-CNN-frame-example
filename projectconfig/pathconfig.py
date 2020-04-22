@@ -8,7 +8,7 @@ class PathConfig:
         self.MODEL_SAVE_PATH = '/models/'
         self.TENSORBOARD_LOG_PATH = '/tensorboard_log/'
         self.CHECKPOINT_PATH = '/checkpoint_path/'
-        self.CHECKPOINT_FORMAT = '/weights.{epoch:02d}-{val_loss:.2f}.cp'
+        self.CHECKPOINT_FORMAT = '/weights.{epoch:02d}-{val_loss:.2f}.hdf5'
         self.MODEL_FORMAT = 'saved_model.hdf5'
 
     def get_tensorboard_path(self):
